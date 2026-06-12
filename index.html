@@ -45,6 +45,7 @@ function generateLink() {
         return;
     }
 
+    // 1. Calculate expiration date (3 days from now)
     const expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 3);
     
@@ -53,12 +54,23 @@ function generateLink() {
     const day = String(expireDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
 
-    // FIXED: The exact specific page targeted directly
-    const baseUrl = "https://nickoftimemoving.com/photoar";
+    // 2. Target your direct public Cognito Form URL instead of the masked domain
+    const baseUrl = "https://cognitoforms.com";
 
-    // Builds the URL string containing clear keys for your site's script to read
-    const finalUrl = `${baseUrl}?quoteID=${encodeURIComponent(quoteIdInput)}&expiredate=${encodeURIComponent(formattedDate)}`;
+    // 3. Construct the clean JSON data object using your internal field names
+    const prefillData = { 
+        "quoteID": quoteIdInput, 
+        "expiredate": formattedDate 
+    };
 
+    // 4. Safely compile and securely string-encode the payload
+    const jsonString = JSON.stringify(prefillData);
+    const encodedJson = encodeURIComponent(jsonString);
+
+    // 5. Build the raw direct URL link 
+    const finalUrl = `${baseUrl}?entry=${encodedJson}`;
+
+    // Output and render view options
     document.getElementById('urlBox').innerText = finalUrl;
     document.getElementById('resultContainer').style.display = 'block';
     document.getElementById('successMsg').style.display = 'none';

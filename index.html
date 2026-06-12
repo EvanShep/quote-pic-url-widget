@@ -25,8 +25,8 @@
 <div class="widget-container">
     <h3>Generate Free Delivery Link</h3>
     <div class="form-group">
-        <label for="quoteID">QUOTE ID</label>
-        <input type="text" id="quoteID" placeholder="e.g. 123456" autocomplete="off">
+        <label for="quoteId">QUOTE ID</label>
+        <input type="text" id="quoteId" placeholder="e.g. 123456" autocomplete="off">
     </div>
     <button id="generateBtn" onclick="generateLink()">Generate Link</button>
     <div class="result-container" id="resultContainer">
@@ -39,28 +39,23 @@
 
 <script>
 function generateLink() {
-    const quoteIdInput = document.getElementById('quoteID').value.trim();
+    const quoteIdInput = document.getElementById('quoteId').value.trim();
     if (!quoteIdInput) {
         alert('Please enter a Quote ID first.');
         return;
     }
 
-    // 1. Calculate expiration date (3 days from now)
-    const expiredate = new Date();
-    expiredate.setDate(expiredate.getDate() + 3);
+    const expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() + 3);
     
-    const year = expiredate.getFullYear();
-    const month = String(expiredate.getMonth() + 1).padStart(2, '0');
-    const day = String(expiredate.getDate()).padStart(2, '0');
+    const year = expireDate.getFullYear();
+    const month = String(expireDate.getMonth() + 1).padStart(2, '0');
+    const day = String(expireDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
 
-    // Target Subpage
     const baseUrl = "https://nickoftimemoving.com/photoar";
-
-    // 2. Build clean URL query parameters
     const finalUrl = `${baseUrl}?quoteID=${encodeURIComponent(quoteIdInput)}&expiredate=${encodeURIComponent(formattedDate)}`;
 
-    // Display results
     document.getElementById('urlBox').innerText = finalUrl;
     document.getElementById('resultContainer').style.display = 'block';
     document.getElementById('successMsg').style.display = 'none';

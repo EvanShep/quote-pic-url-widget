@@ -53,20 +53,11 @@ function generateLink() {
     const day = String(expireDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
 
+    // FIXED: The exact specific page targeted directly
     const baseUrl = "https://nickoftimemoving.com/photoar";
 
-    // Setup the prefill payload object matching your exact Cognito fields
-    const prefillData = { 
-        "quoteID": quoteIdInput, 
-        "expiredate": formattedDate 
-    };
-
-    const jsonString = JSON.stringify(prefillData);
-    
-    // We encode it once here so the browser can read it cleanly from the address bar
-    const encodedJson = encodeURIComponent(jsonString);
-
-    const finalUrl = `${baseUrl}?entry=${encodedJson}`;
+    // Builds the URL string containing clear keys for your site's script to read
+    const finalUrl = `${baseUrl}?quoteID=${encodeURIComponent(quoteIdInput)}&expiredate=${encodeURIComponent(formattedDate)}`;
 
     document.getElementById('urlBox').innerText = finalUrl;
     document.getElementById('resultContainer').style.display = 'block';

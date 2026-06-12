@@ -54,22 +54,11 @@ function generateLink() {
     const day = String(expireDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
 
-    // Target URL
+    // Target Subpage
     const baseUrl = "https://nickoftimemoving.com/photoar";
 
-    // 2. Build the JSON prefill object matching your exact internal field names
-    // Note: If fields don't pop up, check case-sensitivity here (e.g., "QuoteID" or "ExpireDate")
-    const prefillData = { 
-        "quoteID": quoteIdInput, 
-        "expiredate": formattedDate 
-    };
-
-    // 3. Stringify and encode into Cognito's native format
-    const jsonString = JSON.stringify(prefillData);
-    const encodedJson = encodeURIComponent(jsonString);
-
-    // 4. Construct final URL using Cognito's native entry protocol
-    const finalUrl = `${baseUrl}?entry=${encodedJson}`;
+    // 2. Build clean URL query parameters
+    const finalUrl = `${baseUrl}?quoteID=${encodeURIComponent(quoteIdInput)}&expiredate=${encodeURIComponent(formattedDate)}`;
 
     // Display results
     document.getElementById('urlBox').innerText = finalUrl;

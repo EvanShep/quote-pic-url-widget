@@ -55,16 +55,17 @@ function generateLink() {
 
     const baseUrl = "https://nickoftimemoving.com/photoar";
 
-    // This creates the exact prefill layout that the seamless.js script looks for natively
+    // Setup the prefill payload object matching your exact Cognito fields
     const prefillData = { 
         "quoteID": quoteIdInput, 
         "expiredate": formattedDate 
     };
 
     const jsonString = JSON.stringify(prefillData);
+    
+    // We encode it once here so the browser can read it cleanly from the address bar
     const encodedJson = encodeURIComponent(jsonString);
 
-    // Using Cognito's native entry parameter structure
     const finalUrl = `${baseUrl}?entry=${encodedJson}`;
 
     document.getElementById('urlBox').innerText = finalUrl;
